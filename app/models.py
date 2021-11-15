@@ -53,6 +53,10 @@ class Blog(db.Model):
     def save_blog(self):
         db.session.add(self)
         db.session.commit()
+    @classmethod
+    def get_blogs(cls, id):
+        blogs = Blog.query.filter_by(id=id).all()
+        return blogs
 
     def __repr__(self):
         return f'Comments: {self.comment}'

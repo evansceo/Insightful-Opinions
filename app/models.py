@@ -64,6 +64,13 @@ class Blog(db.Model):
     def __repr__(self):
         return f'Blogs {self.blog_title}'
 
+class Comment(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.Text())
+    blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id',ondelete='CASCADE'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete='CASCADE'))
+    date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return f'Comments: {self.comment}'

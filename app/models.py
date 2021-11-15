@@ -42,6 +42,14 @@ class User(UserMixin,db.Model):
         return f'User {self.username}'
         
 
+class Blog(db.Model):
+    __tablename__ = 'blogs'
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    title_blog = db.Column(db.String(255), index=True)
+    description = db.Column(db.String(255), index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete='CASCADE'), nullable=False)
+   
 
     def __repr__(self):
         return f'Comments: {self.comment}'

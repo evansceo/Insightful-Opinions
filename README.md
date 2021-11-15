@@ -46,7 +46,7 @@ The writer would like to... :
 ### Cloning
 * In your terminal:
         
-        $ git clone https://github.com/PerisOduol618/Blogs.git
+        $ git clone https://github.com/evansceo/Insightful-Opinions
         $ cd blogs
 
 ## Running the Application

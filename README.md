@@ -47,7 +47,7 @@ The writer would like to... :
 * In your terminal:
         
         $ git clone https://github.com/evansceo/Insightful-Opinions
-        $ cd blogs
+        $ cd Insightful-Opinions
 
 ## Running the Application
 * Install virtual environment using `$ python3.6 -m venv --without-pip virtual`

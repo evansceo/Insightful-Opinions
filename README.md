@@ -1,9 +1,9 @@
 # My Blogs
 
-#### Author: [Peris Oduol](https://github.com/PerisOduol618)
+#### Author: [Evans Onyiego](https://github.com/PerisOduol618)
 
 
-* Link to live site: [My blogs](https://pepeblogs.herokuapp.com/)
+* Link to live site: [My blogs]
 
 ## Description
 This is a personal blogging website where you can create and share your opinions and other users can read and comment on them. Additionally it has a feature that displays random quotes to inspire your users.
@@ -81,7 +81,7 @@ The writer would like to... :
 
 
 ## Support and contact details
- Incase you come across errors, have questions, ideas ,concerns, or want to contribute to the application, feel free to reach me at :oduolpepe618@gmail.com
+ Incase you come across errors, have questions, ideas ,concerns, or want to contribute to the application, feel free to reach me at :evansville09@gmail.com
 
 ### License
 

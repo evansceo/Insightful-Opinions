@@ -30,5 +30,10 @@ class User(UserMixin,db.Model):
     def password(self):
         raise AltributeError('You cannot read the password attribute')
 
+    @password.setter
+    def password(self, password):
+        self.pass_secure = generate_password_hash(password)
+
+
     def __repr__(self):
         return f'Comments: {self.comment}'

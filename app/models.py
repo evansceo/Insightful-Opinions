@@ -61,6 +61,9 @@ class Blog(db.Model):
     def get_all_blogs(cls):
         blogs = Blog.query.order_by('-id').all()
         return blogs
+    def __repr__(self):
+        return f'Blogs {self.blog_title}'
+
 
     def __repr__(self):
         return f'Comments: {self.comment}'

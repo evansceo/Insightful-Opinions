@@ -24,6 +24,11 @@ class User(UserMixin,db.Model):
     date_joined = db.Column(db.DateTime,default=datetime.utcnow)
     blogs = db.relationship('Blog', backref ='user', passive_deletes=True,lazy = "dynamic")
     comments = db.relationship('Comment', backref ='user' , passive_deletes=True,  lazy ="dynamic")
+    
+
+    @property
+    def password(self):
+        raise AltributeError('You cannot read the password attribute')
 
     def __repr__(self):
         return f'Comments: {self.comment}'

@@ -71,6 +71,7 @@ class Comment(db.Model):
     blog_id = db.Column(db.Integer, db.ForeignKey('blogs.id',ondelete='CASCADE'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete='CASCADE'))
     date = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return f'Comments: {self.comment}'
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+   

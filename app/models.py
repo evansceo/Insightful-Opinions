@@ -57,6 +57,10 @@ class Blog(db.Model):
     def get_blogs(cls, id):
         blogs = Blog.query.filter_by(id=id).all()
         return blogs
+    @classmethod
+    def get_all_blogs(cls):
+        blogs = Blog.query.order_by('-id').all()
+        return blogs
 
     def __repr__(self):
         return f'Comments: {self.comment}'

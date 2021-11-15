@@ -38,6 +38,10 @@ class User(UserMixin,db.Model):
         return check_password_hash(self.pass_secure,password)
 
 
+    def __repr__(self):
+        return f'User {self.username}'
+        
+
 
     def __repr__(self):
         return f'Comments: {self.comment}'

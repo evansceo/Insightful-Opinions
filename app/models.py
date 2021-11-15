@@ -50,6 +50,9 @@ class Blog(db.Model):
     description = db.Column(db.String(255), index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete='CASCADE'), nullable=False)
    
+    def save_blog(self):
+        db.session.add(self)
+        db.session.commit()
 
     def __repr__(self):
         return f'Comments: {self.comment}'

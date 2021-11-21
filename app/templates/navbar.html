@@ -1,48 +1,44 @@
-<nav class="navbar navbar-inverse navbar-dark default-color">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="/" class="navbar-brand"><Strong><span style="font-family: 'Lobster', cursive; font-size: 30px;">My Blogs</Strong></a></span>
-
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="nav-item">
-                    <a href="{{url_for('main.index')}}" class="nav-link"><span style="font-family: 'Lobster', cursive;">Home</span> </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url_for('main.theblog')}}" class="nav-link"><span style="font-family: 'Lobster', cursive;">Blogs</span></a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url_for('main.blogs')}}" class="nav-link"><span style="font-family: 'Lobster', cursive;">Add blog</span></a>
-                </li>
-
-
+<nav class="navbar navbar-expand-lg " id ="head">
+    <div class="container container-fluid" id="navb">
+        <a class="navbar-brand" href="/">
+           <span>Blog Posts</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                {% if current_user.is_authenticated %}
-                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                        aria-haspopup="true" aria-expanded="false">{{current_user.username| capitalize}} <span
-                            class="caret"></span></a>
-                    <ul class="dropdown-menu ">
-                        <li><a href="{{url_for('main.profile',uname=current_user.username)}}">🤵 Profile</a></li>
-                        <hr>
-
-
-                        <li><a href="{{url_for('auth.logout')}}">🙎‍♂️Sign out</a></li>
-                    </ul>
+            <ul class="navbar-nav nav-right">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home</a>&nbsp;
                 </li>
+                
+               {% if current_user.is_authenticated %}
+               <ul class="nav navbar-nav navbar-left">
+             
+               <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a>
+              &nbsp;</li>
+             <!-- <li style="color:white;padding:15px;">{{current_user.username}}</li> -->
+             <li><a href="/createblog" class="tag"> Blog Here</a>&nbsp;</li>
+                <li><a href="{{url_for('auth.logout')}}">Sign out</a>&nbsp;</li>
                 {% else %}
-                <li><a href="{{url_for('auth.login')}}">🙎‍♂️ Sign in</a></li>
+                <li><i class="fa fa-user-circle-o-2x" aria-hidden="true"></i><a href="{{url_for('auth.login')}}"> Sign in</a></li>
+                {%endif%}
             </ul>
-            {%endif%}
+               
+            </ul>
         </div>
     </div>
-
-</nav>
+    
+  </nav>
+  <style>
+    #navb{
+        
+        margin-top: 3%;
+        
+    }
+</style>
+  

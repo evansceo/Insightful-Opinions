@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf%}
+
+{% block content %}
+
+<div class="container">
+    {% if current_user.is_authenticated %}
+    <h1>What's on your mind?</h1>
+
+    <div>
+        {{wtf.quick_form(blog_form)}}
+    </div>
+    {% else %}
+    <h2 class="text-center display-3">Please Sign in to post a blog</h2>
+    {% endif %}
+    
+</div>
+
+{% endblock %}

@@ -1,27 +1,40 @@
-{% extends 'base.html' %}
-{%import "bootstrap/wtf.html" as wtf%}
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf%}
 
-<!-- Navbar block  -->
-{% block navbar %}
-    {% include 'navbar.html' %}
-{% endblock %}
-
+{%block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename= 'sty.css')}}">
+{%endblock %}
 {% block content %}
-
-
-<div  class='container' style="background-image: url(https://images.unsplash.com/photo-1513077202514-c511b41bd4c7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80); background-repeat: no-repeat; background-size: cover; height: 80vh;  background-position: center;">
-    <h1 style="margin: 5%; text-align: center; font-family: 'Lobster', cursive;">Add a blog</h1>
-    <div class="col-md-6">
-    </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    {{wtf.quick_form(blog_form)}}
-                </div>
+ <body>
+    
+  <div id="container" class="container">
+    
+    <div class="card mt-3 " id="display1">
         
-            </div>
-        </div>
+      <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6 ">
+         
+          {{wtf.quick_form(form)}}
+      </div>
+      <div class="col-md-3"></div>
     </div>
-</div>
+    </div>
+    
+  </div>
 
-{% endblock %}
+  <div class="container " id="footer">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container text-center" id="socials">
+          <p><b>Evans Oduor</b></p>
+          <p><b>&copy; 2021</b></p>
+          <p><b>Made with<span class="fa fa-heart" style="color: red;" aria-hidden="true"></span></b></p>
+        </div>
+      </div>
+    
+  </div>
+  </div>
+ </body> 
+ {%endblock%}

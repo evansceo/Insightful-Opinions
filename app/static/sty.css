@@ -1,0 +1,45 @@
+
+#margin{
+    margin: 0vh 4vw 0vh 4vw;
+    background:blanchedalmond;
+}
+
+
+body{
+    background-image: url("img/y2mate.com\ -\ Oceans\ Motion\ Background\ For\ Worship\ Loop\ HD_480p.mp4");
+    background-color: #cccccc;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin-top: 20%;
+}
+#quotes{
+    background:blanchedalmond;
+}
+nav{
+    padding: 5px;
+    background:blanchedalmond;
+}
+#head{
+    text-align: center;
+    font-weight: 900;
+    color: black;
+    background-color: rgb(180, 175, 175);
+    height: 50px;
+    text-align: center;
+    align-items: center;
+    margin-top: -20px;
+}
+h3{
+    padding: 10px;
+}
+#display1{
+    background-color: rgb(180, 175, 175);
+}
+#display{
+    font-weight: 800;
+    color: black;
+    border-radius: 10px; 
+    box-shadow: 0 0 10px rgba(77, 65, 65, 0.1), 0 0 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 0, 0, 0.2);
+    background-color:#e85d04
+}

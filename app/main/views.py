@@ -1,28 +1,70 @@
-from flask import render_template,request,redirect,url_for,abort,jsonify, flash
+from flask import render_template,request,redirect,url_for,abort
 from . import main
+import urllib.request,json
+import requests
+from ..models import User, Blog, Comment
 from .forms import UpdateProfile, BlogForm, CommentForm
-from .. import db, photos
-from ..request import get_blogQuotes
-from ..models import User, Blog,Comment
-from flask_login import login_required, current_user
+from .. import db
+from flask_login import login_required
 
 
 
-# Views
+
 @main.route('/')
 def index():
-    '''
-    View root page function that returns the index page and its data
-    '''
-    blogQuote = get_blogQuotes()
-    title = 'Home -welcome to My Blogs'
+    url = 'http://quotes.stormconsultancy.co.uk/random.json'
+
+    r = requests.get(url)
+    quote = r.json()
+    author = quote['author']
+    random_quote = quote['quote']
+    id = quote['id']
+    permalink = quote['permalink']
+   
+
+
+    return render_template('index.html', quote = random_quote, author = author,id = id, link = permalink)
+
+@main.route('/tweeks',methods=['GET','POST'])    
+def tweeks():
+    blog_form = BlogForm()
+    if blog_form.validate_on_submit():
+        blog = Blog(data = blog_form.data.data, topic = blog_form.topic.data)
+        db.session.add(blog)
+        db.session.commit()
+        
+
+    return render_template('tweek.html', blog_form = blog_form)
+   
+
+@main.route('/blogs',methods=['GET','POST'])    
+def blogs():
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        comment = Comment(comment = comment_form.comment.data)
+        db.session.add(comment)
+        db.session.commit()
     
-    return render_template('index.html',title = title, blogQuote=blogQuote)
+    try:
+        blogs = Blog.query.all()
+        comments = Comment.query.all()
+        #comment = Comment.query.filter_by(blogs_id=blog_id).all()
+        #blog_text = '<ul>'
+        #for blog in blogs:
+        #    blog_text += '<li>' + blog.topic + ', ' + blog.data + '</li>'
+        #blog_text += '</ul>'
+        #return blog_text
+    except Exception as e:
+        # e holds description of the error
+        error_text = "<p>The error:<br>" + str(e) + "</p>"
+        hed = '<h1>Something is broken.</h1>'
+        return hed + error_text
+
+    return render_template('blogs.html', blogs = blogs, comment_form = comment_form, comments = comments)
 
 @main.route('/user/<uname>')
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
-    
 
     if user is None:
         abort(404)
@@ -46,101 +88,4 @@ def update_profile(uname):
 
         return redirect(url_for('.profile',uname=user.username))
 
-    return render_template('profile/update.html',form = form)
-
-
-
-@main.route('/user/<uname>/update/pic',methods= ['POST'])
-@login_required
-def update_pic(uname):
-    user = User.query.filter_by(username = uname).first()
-    if 'photo' in request.files:
-        filename = photos.save(request.files['photo'])
-        path = f'photos/{filename}'
-        user.profile_pic_path = path
-        db.session.commit()
-    return redirect(url_for('main.profile',uname=uname))
-
-
-
-@main.route('/blog/new', methods=['GET', 'POST'])
-@login_required
-def blogs():
-    """
-    View Blog function that returns the BLog page and data
-    """
-    blog_form = BlogForm()
-    if blog_form.validate_on_submit():
-        title_blog= blog_form.title_blog.data
-        description = blog_form.description.data
-        new_blog = Blog(title_blog=title_blog, description=description, user=current_user)
-        db.session.add(new_blog)
-        db.session.commit()
-        return redirect(url_for('main.theblog'))
-    title = 'My Blog'
-    return render_template('blogs.html', title=title, blog_form=blog_form)
-
-@main.route('/blog/allblogs', methods=['GET', 'POST'])
-@login_required
-def theblog():
-    blogs = Blog.query.all()
-    return render_template('myblogs.html', blogs=blogs)
-
-
-
-@main.route('/Update/<int:id>', methods=['GET', 'POST'])
-@login_required
-def update_blog(id):
-    blog = Blog.query.get_or_404(id)
-    if blog.user != current_user:
-        abort(403)
-    form = BlogForm()
-    if form.validate_on_submit():
-        blog.title_blog = form.title_blog.data
-        blog.description = form.description.data
-        db.session.commit()
-
-        return redirect(url_for('main.theblog'))
-    elif request.method == 'GET':
-        form.title_blog.data = blog.title_blog
-        form.description.data = blog.description
-    return render_template('update_blog.html', form=form)
-
-
-@main.route('/view/<int:id>', methods=['GET', 'POST'])
-@login_required
-def view(id):
-    blog = Blog.query.get_or_404(id)
-    blog_comments = Comment.query.filter_by(blog_id=id).all()
-    comment_form = CommentForm()
-    if comment_form.validate_on_submit():
-        new_comment = Comment(blog_id=id, comment=comment_form.comment.data, user=current_user)
-        new_comment.save_comment()
-    return render_template('view.html', blog=blog, blog_comments=blog_comments, comment_form=comment_form)
-
-@main.route('/delete/<int:id>', methods=['GET', 'POST'])
-@login_required
-def delete(id):
-    blog = Blog.query.get_or_404(id)
-    if blog.user != current_user:
-        abort(403)
-    db.session.delete(blog)
-    db.session.commit()
- 
-    return redirect(url_for('main.theblog'))
-
-
-
-@main.route('/delete_comment/<int:comment_id>', methods=['GET', 'POST'])
-@login_required
-def delete_comment(comment_id):
-    comment =Comment.query.get_or_404(comment_id)
-    if (comment.user.id) != current_user.id:
-        abort(403)
-    db.session.delete(comment)
-    db.session.commit()
-    flash('comment succesfully deleted')
-    return redirect (url_for('main.theblog'))
-    # return jsonify("Success"),200
- 
-   
+    return render_template('profile/update.html',form =form)    
